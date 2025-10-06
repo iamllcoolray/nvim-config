@@ -39,3 +39,8 @@ luac.out
 *.x86_64
 *.hex
 
+# System Ignores
+lazy-lock.json
+.DS_Store
+.vscode
+.vstags

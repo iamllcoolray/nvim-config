@@ -19,6 +19,12 @@ return {
           "rust",
           "c",
           "cpp",
+          "perl",
+          "ruby",
+          "php",
+          "markdown",
+          "markdown_inline",
+          "zig",
         },
         auto_install = true,
         highlight = {

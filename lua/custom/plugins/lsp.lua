@@ -12,13 +12,18 @@ return {
       require("mason").setup()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "lua_ls",
-          "ts_ls",
-          "pyright",
-          "jdtls",        -- Java
-          "gopls",        -- Go
+          "lua_ls",        -- Lua
+          "ts_ls",         -- JavaScript/TypeScript
+          "pyright",       -- Python
+          "jdtls",         -- Java
+          "gopls",         -- Go
           "rust_analyzer", -- Rust
-          "clangd",       -- C/C++
+          "clangd",        -- C/C++
+          "perlnavigator", -- Perl
+          "ruby_lsp",      -- Ruby
+          "intelephense",  -- PHP
+          "marksman",      -- Markdown
+          "zls",           -- Zig
         },
       })
 
@@ -100,7 +105,7 @@ return {
       })
 
       -- Configure remaining servers with default settings
-      local default_servers = { "ts_ls", "pyright", "jdtls" }
+      local default_servers = { "ts_ls", "pyright", "jdtls", "perlnavigator", "ruby_lsp", "intelephense", "marksman" }
       for _, server in ipairs(default_servers) do
         vim.lsp.config(server, {
           capabilities = capabilities,
@@ -108,7 +113,19 @@ return {
       end
 
       -- Enable all configured servers
-      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "jdtls", "gopls", "rust_analyzer", "clangd" })
+      vim.lsp.enable({ 
+        "lua_ls", 
+        "ts_ls", 
+        "pyright", 
+        "jdtls", 
+        "gopls", 
+        "rust_analyzer", 
+        "clangd",
+        "perlnavigator",
+        "ruby_lsp",
+        "intelephense",
+        "marksman",
+      })
     end,
   },
 }

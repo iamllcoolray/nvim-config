@@ -42,61 +42,73 @@ return {
         end,
       })
 
-      -- LSP server configurations
+      -- Get capabilities for LSP
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-      local servers = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = { "vim" },
-              },
+      -- Configure lua_ls with custom settings
+      vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
             },
           },
         },
-        ts_ls = {},
-        pyright = {},
-        jdtls = {},
-        gopls = {
-          settings = {
-            gopls = {
-              analyses = {
-                unusedparams = true,
-              },
-              staticcheck = true,
-            },
-          },
-        },
-        rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = {
-              cargo = {
-                allFeatures = true,
-              },
-              checkOnSave = {
-                command = "clippy",
-              },
-            },
-          },
-        },
-        clangd = {
-          cmd = {
-            "clangd",
-            "--background-index",
-            "--clang-tidy",
-            "--header-insertion=iwyu",
-            "--completion-style=detailed",
-            "--function-arg-placeholders",
-          },
-        },
-      }
+      })
 
-      for server, config in pairs(servers) do
-        config.capabilities = capabilities
-        require("lspconfig")[server].setup(config)
+      -- Configure gopls with custom settings
+      vim.lsp.config("gopls", {
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+          },
+        },
+      })
+
+      -- Configure rust_analyzer with custom settings
+      vim.lsp.config("rust_analyzer", {
+        capabilities = capabilities,
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+            },
+            checkOnSave = {
+              command = "clippy",
+            },
+          },
+        },
+      })
+
+      -- Configure clangd with custom settings
+      vim.lsp.config("clangd", {
+        capabilities = capabilities,
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+        },
+      })
+
+      -- Configure remaining servers with default settings
+      local default_servers = { "ts_ls", "pyright", "jdtls" }
+      for _, server in ipairs(default_servers) do
+        vim.lsp.config(server, {
+          capabilities = capabilities,
+        })
       end
+
+      -- Enable all configured servers
+      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "jdtls", "gopls", "rust_analyzer", "clangd" })
     end,
   },
 }

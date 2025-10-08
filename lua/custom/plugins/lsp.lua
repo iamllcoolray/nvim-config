@@ -56,8 +56,18 @@ return {
         capabilities = capabilities,
         settings = {
           Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
             diagnostics = {
-              globals = { "vim" },
+              globals = { "vim", "love" },
+            },
+            workspace = {
+              library = {
+                vim.env.VIMRUNTIME,
+                "${3rd}/love2d/library",
+              },
+              checkThirdParty = false,
             },
           },
         },

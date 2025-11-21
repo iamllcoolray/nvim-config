@@ -72,7 +72,41 @@ return {
           },
         },
       })
-
+    
+      -- Configure pyright to detect .venv automatically (Windows-compatible)
+      vim.lsp.config("pyright", {
+        capabilities = capabilities,
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace",
+            },
+          },
+        },
+        before_init = function(_, config)
+          -- Look for .venv in the current working directory
+          local path_sep = package.config:sub(1, 1) -- Gets '\' on Windows, '/' on Unix
+          local venv_path = vim.fn.getcwd() .. path_sep .. ".venv"
+          
+          if vim.fn.isdirectory(venv_path) == 1 then
+            -- On Windows, use Scripts instead of bin
+            local python_path
+            if path_sep == "\\" then
+              python_path = venv_path .. "\\Scripts\\python.exe"
+            else
+              python_path = venv_path .. "/bin/python"
+            end
+            
+            -- Only set if the python executable exists
+            if vim.fn.filereadable(python_path) == 1 then
+              config.settings.python.pythonPath = python_path
+            end
+          end
+        end,
+      })
+     
       -- Configure gopls with custom settings
       vim.lsp.config("gopls", {
         capabilities = capabilities,
@@ -115,7 +149,7 @@ return {
       })
 
       -- Configure remaining servers with default settings
-      local default_servers = { "ts_ls", "pyright", "jdtls", "perlnavigator", "ruby_lsp", "intelephense", "marksman" }
+      local default_servers = { "ts_ls", "jdtls", "perlnavigator", "ruby_lsp", "intelephense", "marksman" }
       for _, server in ipairs(default_servers) do
         vim.lsp.config(server, {
           capabilities = capabilities,

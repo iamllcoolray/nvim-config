@@ -86,6 +86,31 @@ vim.keymap.set("n", "<leader>wc", "<cmd>close<CR>", { desc = "Close current wind
 vim.keymap.set("n", "<leader>wo", "<cmd>only<CR>", { desc = "Close all other windows" })
 vim.keymap.set("n", "<leader>w=", "<C-w>=", { desc = "Make splits equal size" })
 
+-- Claude Code keymaps
+vim.keymap.set("n", "<leader>ac", "<cmd>ClaudeCode<cr>",           { desc = "Claude: Toggle" })
+vim.keymap.set("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       { desc = "Claude: Focus" })
+vim.keymap.set("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   { desc = "Claude: Resume session" })
+vim.keymap.set("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", { desc = "Claude: Continue session" })
+vim.keymap.set("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       { desc = "Claude: Add current buffer" })
+vim.keymap.set("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>",        { desc = "Claude: Send selection" })
+vim.keymap.set("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>",  { desc = "Claude: Accept diff" })
+vim.keymap.set("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",    { desc = "Claude: Deny diff" })
+vim.keymap.set("n", "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", { desc = "Claude: Select model" })
+
+
+-- Telescope / file finding keymaps
+-- Add these after your window management keymaps, before require("lazy").setup(...)
+-- Requires: sudo apt install ripgrep  (for live_grep to work) 
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>",  { desc = "Find: Files" })
+vim.keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>",    { desc = "Find: Recent files" })
+vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>",   { desc = "Find: Grep in project" })
+vim.keymap.set("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "Find: Word under cursor" })
+vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>",     { desc = "Find: Open buffers" })
+vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>",   { desc = "Find: Help tags" })
+vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>",     { desc = "Find: Keymaps" })
+vim.keymap.set("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", { desc = "Find: Diagnostics" })
+vim.keymap.set("n", "<leader>f.", "<cmd>Telescope resume<cr>",      { desc = "Find: Resume last" })
+
 -- Load plugins from lua/custom/plugins
 require("lazy").setup("custom.plugins", {
   change_detection = {

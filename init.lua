@@ -20,7 +20,7 @@ vim.g.maplocalleader = " "
 -- Basic settings
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.mouse = "a"
+vim.opt.mouse = ""
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = false
@@ -37,6 +37,11 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.undofile = true
 vim.opt.scrolloff = 8
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.softtabstop = 2
+vim.opt.smarttab = true
+vim.cmd("filetype plugin indent on")
 
 -- Auto enter insert mode when entering terminal
 vim.api.nvim_create_autocmd("TermOpen", {
